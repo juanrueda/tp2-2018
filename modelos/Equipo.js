@@ -1,13 +1,12 @@
 module.exports = (sequelize, type) => {
-    return sequelize.define('juegos', {
-        id_juego: {
+    return sequelize.define('equipos', {
+        id_equipo: {
             type: type.INTEGER,
             primaryKey: true,
             autoIncrement: true,
         },
        
-        hora_inicio: type.DATE,
-        hora_fin: type.DATE,
+        nombre_equipo: type.STRING        
         
     }, {
         timestamps: false

@@ -1,10 +1,14 @@
 const express = require('express');
-const Juego = require('./sequelize');
+const {Juego,Equipo} = require('./sequelize');
+  
 
 const app = express();
 
 app.get('/juegos', (req, res, next) => {
     Juego.findAll().then(juegos => res.json(juegos))
+});
+app.get('/equipos', (req, res, next) => {
+    Equipo.findAll().then(equipos => res.json(equipos))
 });
 
 const port = 3000;

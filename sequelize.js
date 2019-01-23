@@ -1,7 +1,8 @@
 const Sequelize = require('sequelize');
 const JuegosModel = require('./modelos/Juego');
+const EquiposModel = require('./modelos/Equipo');
 
-const sequelize = new Sequelize('tp2_ttads', 'root', '39710975', {
+const sequelize = new Sequelize('tp2_ttads', 'root', 'root', {
     host: 'localhost',
     dialect: 'mysql',
     pool: {
@@ -13,10 +14,13 @@ const sequelize = new Sequelize('tp2_ttads', 'root', '39710975', {
 });
 
 const Juego = JuegosModel(sequelize, Sequelize);
+const Equipo = EquiposModel(sequelize, Sequelize);
 
-Juego.sync()
+sequelize.sync()
     .then(() => {
         console.log('Db and tables created');
     });
+    
+    module.exports = {Juego,Equipo}
+    
 
-module.exports = Juego;
