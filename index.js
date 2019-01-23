@@ -1,5 +1,5 @@
 const express = require('express');
-const {Juego,Equipo} = require('./sequelize');
+const {Juego,Equipo,TipoEvento} = require('./sequelize');
   
 
 const app = express();
@@ -9,6 +9,9 @@ app.get('/juegos', (req, res, next) => {
 });
 app.get('/equipos', (req, res, next) => {
     Equipo.findAll().then(equipos => res.json(equipos))
+});
+app.get('/tiposEventos', (req, res, next) => {
+    TipoEvento.findAll().then(tiposEventos => res.json(tiposEventos))
 });
 
 const port = 3000;
