@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-const conexion = new Sequelize('tp2_ttads', 'root', '39710975', {
+const conexion = new Sequelize('tp2_ttads', 'root', 'root', {
     host: 'localhost',
     dialect: 'mysql',
     pool: {
