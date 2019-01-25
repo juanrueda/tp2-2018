@@ -70,6 +70,6 @@ El archivo readme.md deberá ser modificado y deberá agregarse al final el tema
 
 Integrantes:
 
-Fabio, Guido
-Rueda, Juan
-Paoloni, Franco
+- Fabio, Guido
+- Rueda, Juan
+- Paoloni, Franco
