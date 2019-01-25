@@ -67,3 +67,9 @@ En la misma deberán indicar: fecha de la reunión, asistentes y por cada asiste
 La entrega final deberá hacerse enviando por email a los profesores la URL del repositorio de git. La fecha límite de entrega es dos días antes del cierre de regularidades, la misma debe incluir el código del trabajo y una defensa del mismo la cual debe haber sido pactada con anterioridad según la disponibilidad de los docente.
 
 El archivo readme.md deberá ser modificado y deberá agregarse al final el tema del trabajo práctico y alcance pactado con el docente, el trabajo, año de cursado e integrantes (legajo, nombre y apellido).
+
+Integrantes:
+
+Fabio, Guido
+Rueda, Juan
+Paoloni, Franco
