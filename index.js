@@ -1,5 +1,5 @@
 const express = require('express');
-const {Juego,Equipo,TipoEvento} = require('./sequelize');
+const {Juego,Equipo,TipoEvento,Evento} = require('./sequelize');
 const bodyParser = require('body-parser');
 
 const app = express();
@@ -68,6 +68,52 @@ app.post('/equipos/nuevo', (req, res, next) => {
 
 app.get('/tiposEventos', (req, res, next) => {
     TipoEvento.findAll().then(tiposEventos => res.json(tiposEventos))
+});
+
+app.get('/eventos', (req, res, next) =>{
+    Evento.findAll().then(eventos => res.json(eventos))
+});
+
+app.post('/eventos/nuevo', (req, res, next) => {
+
+    var evento = {
+        hora_evento : req.body.hora_evento,
+        id_tipo_evento : req.body.id_tipo_evento,
+        id_juego : req.body.id_juego,
+        id_equipo : req.body.id_equipo
+    }  
+    Evento.create(evento);
+    res.send(evento);
+});
+
+app.post('/eventos/modificar', (req, res, next) => {    
+    Evento.update({
+        hora_evento : req.body.hora_evento,
+        id_tipo_evento : req.body.id_tipo_evento,
+        id_juego : req.body.id_juego,
+        id_equipo : req.body.id_equipo
+    },
+    {
+        where : {
+            id_eventos : req.body.id_eventos
+        }
+    }).then(evento => res.json(evento));
+});
+
+app.post('/eventos/eliminar', (req, res, next) => {
+    Evento.destroy({
+        where : {
+            id_eventos : req.body.id_eventos
+        }
+    }).then((deletedRecord) => {
+        if(deletedRecord === 1){
+            res.status(200).json({message:"Deleted successfully"});          
+        }
+        else
+        {
+            res.status(404).json({message:"record not found"})
+        }
+    })
 });
 
 const port = 3000;
