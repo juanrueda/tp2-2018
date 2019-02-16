@@ -13,6 +13,27 @@ app.use(bodyParser.urlencoded({
 app.get('/juegos', (req, res, next) => {
     Juego.findAll().then(juegos => res.json(juegos))
 });
+app.post('/juegos/modificar', (req, res,next ) => {
+    Juego.update({
+        hora_inicio : req.body.hora_inicio,
+        hora_fin : req.body.hora_fin   
+    },
+    {where : {
+        id_juego : req.body.id_juego
+    }
+
+    }).then(juego => res.json(juego))
+});
+
+app.post('/juegos/nuevo', (req, res, next) => {
+
+    var juego = {
+        hora_inicio : req.body.hora_inicio,
+        hora_fin : req.body.hora_fin
+    }  
+    Juego.create(juego);
+    res.send(juego);
+});
 
 app.get('/equipos', (req, res, next) => {
     Equipo.findAll().then(equipos => res.json(equipos))

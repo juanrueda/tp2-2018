@@ -8,21 +8,21 @@ module.exports = (sequelize, type) => {
        
         hora_evento: type.DATE,
         id_tipo_evento: {
-            type: Sequelize.INTEGER,
+            type: type.INTEGER,
             references: {
                model: 'tipos_eventos', 
                key: 'id_tipos_evento', 
             }
          },
          id_juego: {
-            type: Sequelize.INTEGER,
+            type: type.INTEGER,
             references: {
                model: 'juegos', 
                key: 'id_juego', 
             }
          },
          id_equipo: {
-            type: Sequelize.INTEGER,
+            type: type.INTEGER,
             references: {
                model: 'equipos', 
                key: 'id_equipo', 
