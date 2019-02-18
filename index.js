@@ -1,5 +1,5 @@
 const express = require('express');
-const {Juego,Equipo,TipoEvento,Evento} = require('./sequelize');
+const {Juego,Equipo,TipoEvento,Evento,JuegosEquipos} = require('./sequelize');
 const bodyParser = require('body-parser');
 
 const app = express();
@@ -33,6 +33,22 @@ app.post('/juegos/nuevo', (req, res, next) => {
     }  
     Juego.create(juego);
     res.send(juego);
+});
+
+app.post('/juegos/eliminar', (req, res, next) => {
+    Juego.destroy({
+        where : {
+            id_juego : req.body.id_juego
+        }
+    }).then((deletedRecord) => {
+        if(deletedRecord === 1){
+            res.status(200).json({message:"Deleted successfully"});          
+        }
+        else
+        {
+            res.status(404).json({message:"record not found"})
+        }
+    })
 });
 
 app.get('/equipos', (req, res, next) => {
@@ -91,6 +107,43 @@ app.get('/tiposEventos', (req, res, next) => {
     TipoEvento.findAll().then(tiposEventos => res.json(tiposEventos))
 });
 
+app.post('/tiposEventos/nuevo', (req,res,next)=>{
+    
+    var tipoEvento = {
+        nombre_evento : req.body.nombre_evento
+    }
+    TipoEvento.create(tipoEvento);
+    res.send(tipoEvento);
+});
+
+app.post('/tiposEventos/modificar', (req, res, next)=>{
+    TipoEvento.update({
+        nombre_evento : req.body.nombre_evento
+    },
+    {
+        where: {
+            id_tipos_eventos : req.body.id_tipos_eventos
+        }
+    
+    }).then(tipoEvento => res.json(tipoEvento))
+});
+
+app.post('/tiposEventos/eliminar', (req, res, next)=>{
+    TipoEvento.destroy({
+        where:  {
+            id_tipos_eventos : req.body.id_tipos_eventos
+        }
+    }).then((deletedRecord) => {
+        if(deletedRecord === 1){
+            res.status(200).json({message:"Deleted successfully"});          
+        }
+        else
+        {
+            res.status(404).json({message:"record not found"})
+        }
+    })       
+});
+
 app.get('/eventos', (req, res, next) =>{
     Evento.findAll().then(eventos => res.json(eventos))
 });
@@ -136,6 +189,41 @@ app.post('/eventos/eliminar', (req, res, next) => {
         }
     })
 });
+
+app.get('/juegosEquipos',(req,res,next)=>{
+    JuegosEquipos.findAll().then(juegosEquipos => res.json(juegosEquipos))     
+})
+
+app.post('/juegosEquipos/nuevo', (req, res, next) => {
+
+    var juegoEquipo = {
+
+        id_juego : req.body.id_juego,
+        id_equipo : req.body.id_equipo
+    }  
+    JuegosEquipos.create(juegoEquipo);
+    res.send(juegoEquipo);
+});
+
+app.post('/juegosEquipos/eliminar', (req, res, next) => {
+    JuegosEquipos.destroy({
+        where : {
+            id_equipo : req.body.id_equipo,
+            id_juego : req.body.id_juego
+        }
+    }).then((deletedRecord) => {
+        if(deletedRecord === 1){
+            res.status(200).json({message:"Deleted successfully"});          
+        }
+        else
+        {
+            res.status(404).json({message:"record not found"})
+        }
+    })
+});
+
+
+
 
 const port = 3000;
 app.listen(port, () => {
