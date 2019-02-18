@@ -222,6 +222,14 @@ app.post('/juegosEquipos/eliminar', (req, res, next) => {
     })
 });
 
+app.get('/juegosActivos', (req,res,next)=>{
+    Juego.findAll({
+        where:{
+            hora_fin : null
+        }
+    }).then(juegosActivos => res.json(juegosActivos))
+})
+
 
 
 
