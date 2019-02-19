@@ -51,6 +51,7 @@ app.post('/juegos/eliminar', (req, res, next) => {
     })
 });
 
+
 app.get('/equipos', (req, res, next) => {
     Equipo.findAll().then(equipos => res.json(equipos))
 });
@@ -60,10 +61,16 @@ app.get('/equipos', (req, res, next) => {
 //         .then(equipos => res.json(equipos))
 // });
 
-app.get('/equipos/:nombre', (req, res, next) => {
-    Equipo.findOne({ where: { nombre_equipo : req.params.nombre }})
+// app.get('/equipos/:nombre', (req, res, next) => {
+//     Equipo.findOne({ where: { nombre_equipo : req.params.nombre }})
+//         .then(equipo => res.json(equipo))
+// });
+
+app.get('/equipos/:id', (req, res, next) => {
+    Equipo.findByPk( req.params.id )
         .then(equipo => res.json(equipo))
 });
+
 
 app.post('/equipos/modificar', (req, res, next) => {    
     Equipo.update({
@@ -126,6 +133,11 @@ app.post('/tiposEventos/modificar', (req, res, next)=>{
         }
     
     }).then(tipoEvento => res.json(tipoEvento))
+});
+
+app.get('/tiposEventos/:id', (req, res, next) => {
+    TipoEvento.findByPk( req.params.id )
+        .then(tipoEvento => res.json(tipoEvento))
 });
 
 app.post('/tiposEventos/eliminar', (req, res, next)=>{
@@ -229,6 +241,18 @@ app.get('/juegosActivos', (req,res,next)=>{
         }
     }).then(juegosActivos => res.json(juegosActivos))
 })
+
+// app.post('/juegos/detalles',(req,res,next)=>{
+//     Juego.findByPk(req.body.id_juego)
+//     .then(evento=>Evento.findAll({where:{id_eventos:evento.id_eventos},include:[Juego]}))
+//     .then(juego => res.json(juego));
+// })
+
+app.post('/juegos/detalles',(req,res,next)=>{
+    Evento.findAll({where:{id_juego: req.body.id_juego},include:[Juego]})
+    .then(evento => res.json(evento))
+})
+
 
 
 
