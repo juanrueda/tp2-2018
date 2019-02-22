@@ -8,11 +8,15 @@ app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({
     extended: true
-  }));
+}));
+
+
+//Juegos
 
 app.get('/juegos', (req, res, next) => {
     Juego.findAll().then(juegos => res.json(juegos))
 });
+
 app.post('/juegos/modificar', (req, res,next ) => {
     Juego.update({
         hora_inicio : req.body.hora_inicio,
@@ -51,6 +55,22 @@ app.post('/juegos/eliminar', (req, res, next) => {
     })
 });
 
+app.get('/juegos/activos', (req,res,next)=>{
+    Juego.findAll({
+        where:{
+            hora_fin : null
+        }
+    }).then(juegosActivos => res.json(juegosActivos))
+})
+
+app.post('/juegos/:id',(req,res,next)=>{
+    // Evento.findAll({where:{id_juego: req.parms.id},include:[Juego]})
+    // .then(evento => res.json(evento))
+    Juego.findAll({where:{id_juego: req.params.id},include:[Evento]})
+    .then(detalle => res.json(detalle))
+})
+
+//Equipos
 
 app.get('/equipos', (req, res, next) => {
     Equipo.findAll().then(equipos => res.json(equipos))
@@ -108,7 +128,7 @@ app.post('/equipos/nuevo', (req, res, next) => {
     res.send(equipo);
 });
 
-
+//Tipos de eventos
 
 app.get('/tiposEventos', (req, res, next) => {
     TipoEvento.findAll().then(tiposEventos => res.json(tiposEventos))
@@ -156,6 +176,8 @@ app.post('/tiposEventos/eliminar', (req, res, next)=>{
     })       
 });
 
+//Eventos
+
 app.get('/eventos', (req, res, next) =>{
     Evento.findAll().then(eventos => res.json(eventos))
 });
@@ -202,6 +224,8 @@ app.post('/eventos/eliminar', (req, res, next) => {
     })
 });
 
+//JuegosEquipos
+
 app.get('/juegosEquipos',(req,res,next)=>{
     JuegosEquipos.findAll().then(juegosEquipos => res.json(juegosEquipos))     
 })
@@ -233,27 +257,6 @@ app.post('/juegosEquipos/eliminar', (req, res, next) => {
         }
     })
 });
-
-app.get('/juegosActivos', (req,res,next)=>{
-    Juego.findAll({
-        where:{
-            hora_fin : null
-        }
-    }).then(juegosActivos => res.json(juegosActivos))
-})
-
-// app.post('/juegos/detalles',(req,res,next)=>{
-//     Juego.findByPk(req.body.id_juego)
-//     .then(evento=>Evento.findAll({where:{id_eventos:evento.id_eventos},include:[Juego]}))
-//     .then(juego => res.json(juego));
-// })
-
-app.post('/juegos/detalles',(req,res,next)=>{
-    // Evento.findAll({where:{id_juego: req.body.id_juego},include:[Juego]})
-    // .then(evento => res.json(evento))
-    Juego.findAll({where:{id_juego: req.body.id_juego},include:[Evento]})
-    .then(evento => res.json(evento))
-})
 
 
 
