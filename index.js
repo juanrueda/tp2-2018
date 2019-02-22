@@ -64,8 +64,13 @@ app.get('/juegos/activos', (req,res,next)=>{
 })
 
 app.get('/juegos/:id',(req,res,next)=>{
-    // Evento.findAll({where:{id_juego: req.parms.id},include:[Juego]})
-    // .then(evento => res.json(evento))
+    Juego.update({
+        hora_fin : Date.now()
+    },
+    {
+        where : {
+            id_juego : req.params.id
+        }})
     Juego.findAll({where:{id_juego: req.params.id},include:[Evento]})
     .then(detalle => res.json(detalle))
 })
