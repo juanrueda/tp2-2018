@@ -13,12 +13,12 @@ const Juego = JuegosModel(Conexion, Sequelize);
 const Equipo = EquiposModel(Conexion, Sequelize);
 const TipoEvento = TiposEventosModel(Conexion, Sequelize);
 const Evento = EventosModel(Conexion, Sequelize);
-const JuegosEquipos = JuegosEquiposModel (Conexion, Sequelize);
-const JuegoEvento = Conexion.define('juego_evento',{});
+//const JuegosEquipos = JuegosEquiposModel (Conexion, Sequelize);
+//const JuegoEvento = Conexion.define('juego_evento',{});
 
 
-Juego.belongsToMany(Evento,{through:JuegoEvento,unique:false})
-Evento.belongsToMany(Juego,{through:JuegoEvento,unique:false})
+Juego.hasMany(Evento,{foreignKey: 'id_juego', sourceKey: 'id_juego'})
+Evento.belongsTo(Juego,{foreignKey: 'id_juego', sourceKey: 'id_juego'})
 
 
 
@@ -27,6 +27,6 @@ Conexion.sync()
         console.log('Db and tables created');
     });
     
-module.exports = {Juego,Equipo,TipoEvento,Evento,JuegosEquipos}
+module.exports = {Juego,Equipo,TipoEvento,Evento}
     
 

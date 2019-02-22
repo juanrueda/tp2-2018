@@ -249,7 +249,9 @@ app.get('/juegosActivos', (req,res,next)=>{
 // })
 
 app.post('/juegos/detalles',(req,res,next)=>{
-    Evento.findAll({where:{id_juego: req.body.id_juego},include:[Juego]})
+    // Evento.findAll({where:{id_juego: req.body.id_juego},include:[Juego]})
+    // .then(evento => res.json(evento))
+    Juego.findAll({where:{id_juego: req.body.id_juego},include:[Evento]})
     .then(evento => res.json(evento))
 })
 
