@@ -64,16 +64,28 @@ app.get('/juegos/activos', (req,res,next)=>{
 })
 
 app.get('/juegos/:id',(req,res,next)=>{
+    // Juego.update({
+    //     hora_fin : Date.now()
+    // },
+    // {
+    //     where : {
+    //         id_juego : req.params.id
+    //     }});
+    Juego.findOne({where:{id_juego: req.params.id},include:[Evento]})
+    .then(detalle => res.json(detalle));
+});
+
+app.post('/juegos/finalizarJuego', (req, res, next) => {
     Juego.update({
         hora_fin : Date.now()
     },
     {
         where : {
-            id_juego : req.params.id
-        }})
-    Juego.findAll({where:{id_juego: req.params.id},include:[Evento]})
-    .then(detalle => res.json(detalle))
-})
+            id_juego : req.body.id_juego
+        }
+    })
+    .then(juego => res.json(juego));
+});
 
 //Equipos
 
@@ -81,21 +93,10 @@ app.get('/equipos', (req, res, next) => {
     Equipo.findAll().then(equipos => res.json(equipos))
 });
 
-// app.post('/equipos', (req, res, next) => {
-//     Equipo.findAll({ where: { nombre_equipo : req.body.nombre_equipo }})
-//         .then(equipos => res.json(equipos))
-// });
-
-// app.get('/equipos/:nombre', (req, res, next) => {
-//     Equipo.findOne({ where: { nombre_equipo : req.params.nombre }})
-//         .then(equipo => res.json(equipo))
-// });
-
 app.get('/equipos/:id', (req, res, next) => {
     Equipo.findByPk( req.params.id )
         .then(equipo => res.json(equipo))
 });
-
 
 app.post('/equipos/modificar', (req, res, next) => {    
     Equipo.update({
