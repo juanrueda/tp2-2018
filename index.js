@@ -63,17 +63,24 @@ app.get('/juegos/activos', (req,res,next)=>{
     }).then(juegosActivos => res.json(juegosActivos))
 })
 
-app.get('/juegos/:id',(req,res,next)=>{
-    // Juego.update({
-    //     hora_fin : Date.now()
-    // },
-    // {
-    //     where : {
-    //         id_juego : req.params.id
-    //     }});
-    Juego.findOne({where:{id_juego: req.params.id},include:[Evento]})
+app.get('/juegos/:id',(req,res,next)=>{    
+    
+    Evento.findAll({where:{id_juego: req.params.id},include:[TipoEvento,Juego,Equipo]})   
     .then(detalle => res.json(detalle));
+    
+    
+    
+    //Juego.findOne({where:{id_juego: req.params.id},include:[Evento]})
+    // .then(juego=>Evento.findAll({where: id_eventos : juego.id_evento}))
+    
+    // .then(respuesta=>TipoEvento.findOne({where:{id_tipos_eventos:respuesta.evento[0].id_tipo_evento},include:[Evento]}))
+
+    // .then(detalle => res.json(detalle));
 });
+
+
+
+
 
 app.post('/juegos/finalizarJuego', (req, res, next) => {
     Juego.update({
