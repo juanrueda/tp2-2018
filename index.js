@@ -65,21 +65,9 @@ app.get('/juegos/activos', (req,res,next)=>{
 
 app.get('/juegos/:id',(req,res,next)=>{    
     
-    Evento.findAll({where:{id_juego: req.params.id},include:[TipoEvento,Juego,Equipo]})   
+    Evento.findAll({where:{id_juego: req.params.id},include:[TipoEvento,Juego,Equipo]})
     .then(detalle => res.json(detalle));
-    
-    
-    
-    //Juego.findOne({where:{id_juego: req.params.id},include:[Evento]})
-    // .then(juego=>Evento.findAll({where: id_eventos : juego.id_evento}))
-    
-    // .then(respuesta=>TipoEvento.findOne({where:{id_tipos_eventos:respuesta.evento[0].id_tipo_evento},include:[Evento]}))
-
-    // .then(detalle => res.json(detalle));
 });
-
-
-
 
 
 app.post('/juegos/finalizarJuego', (req, res, next) => {
@@ -270,10 +258,6 @@ app.post('/juegosEquipos/eliminar', (req, res, next) => {
         }
     })
 });
-
-
-
-
 
 const port = 3000;
 app.listen(port, () => {
